@@ -1,2 +1,0 @@
-defmodule NeuralNet do
-end

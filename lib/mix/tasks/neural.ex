@@ -1,6 +1,8 @@
 defmodule Mix.Tasks.Neural do
   use Mix.Task
 
+  @shortdoc "Run the neural network app"
+
   def run(args) do
     neuronA = %NeuralNet.Neuron{}
     neuronB = %NeuralNet.Neuron{}
