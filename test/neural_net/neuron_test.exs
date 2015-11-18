@@ -10,17 +10,6 @@ defmodule NeuralNet.NeuronTest do
     assert neuron.outgoing == []
   end
 
-  #test "set incoming connections" do
-    #neuron = %NeuralNet.NeuralNet{
-      #incoming: [
-        #%NeuralNet.Connection{source: %NeuralNet.NeuralNet{output: 2}},
-        #%NeuralNet.Connection{source: %NeuralNet.NeuralNet{output: 5}}
-      #]
-    #}
-
-
-  #end
-
   test ".activation_function" do
     assert NeuralNet.Neuron.activation_function(1) == 0.7310585786300049
   end
