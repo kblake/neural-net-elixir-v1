@@ -4,6 +4,14 @@ defmodule NeuralNet.Neuron do
 
   defstruct input: 0, output: 0, incoming: [], outgoing: []
 
+  @doc """
+  Sigmoid function. See more at: https://en.wikipedia.org/wiki/Sigmoid_function
+
+  ## Example
+
+      iex> NeuralNet.Neuron.activation_function(1)
+      0.7310585786300049
+  """
   def activation_function(input) do
     1 / (1 + :math.exp(-input))
   end
@@ -14,12 +22,44 @@ defmodule NeuralNet.Neuron do
     end
   end
 
+  @doc """
+  Active a neuron
+
+  ## Activate with specified value
+      iex> neuron = NeuralNet.Neuron.activate(%NeuralNet.Neuron{}, 1)
+      ...> neuron.output
+      0.7310585786300049
+
+  ## Activate with no incoming connections
+      iex> neuron = NeuralNet.Neuron.activate(%NeuralNet.Neuron{})
+      ...> neuron.output
+      0.5
+
+  ## Activate with incoming connections
+      iex> neuron = %NeuralNet.Neuron{ incoming: [ %NeuralNet.Connection{source: %NeuralNet.Neuron{output: 6}} ] }
+      ...> neuron = NeuralNet.Neuron.activate(neuron)
+      ...> neuron.output
+      0.9525741268224334
+  """
   def activate(neuron, value \\ nil) do
     input = value || Enum.reduce(neuron.incoming, 0, sumf)
 
     %Neuron{neuron | output: activation_function(input)}
   end
 
+  @doc """
+  Connect two neurons
+
+  ## Example
+
+      iex> neuronA = %NeuralNet.Neuron{ outgoing: [%NeuralNet.Connection{}] }
+      ...> neuronB = %NeuralNet.Neuron{ incoming: [%NeuralNet.Connection{}] }
+      ...> {:ok, neuronA, neuronB} = NeuralNet.Neuron.connect(neuronA, neuronB)
+      ...> length(neuronA.outgoing)
+      2
+      iex> length(neuronB.incoming)
+      2
+  """
   def connect(source, target) do
     connection = %Connection{source: source, target: target}
     source = %Neuron{source | outgoing: source.outgoing ++ [connection]}

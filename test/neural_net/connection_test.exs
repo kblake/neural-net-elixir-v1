@@ -1,5 +1,5 @@
 defmodule NeuralNet.ConnectionTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest NeuralNet.Connection
 
   test "has default values" do
