@@ -23,7 +23,7 @@ defmodule NeuralNet.Neuron do
   end
 
   @doc """
-  Active a neuron
+  Activate a neuron
 
   ## Activate with specified value
       iex> neuron = NeuralNet.Neuron.activate(%NeuralNet.Neuron{}, 1)
@@ -43,7 +43,6 @@ defmodule NeuralNet.Neuron do
   """
   def activate(neuron, value \\ nil) do
     input = value || Enum.reduce(neuron.incoming, 0, sumf)
-
     %Neuron{neuron | output: activation_function(input)}
   end
 
