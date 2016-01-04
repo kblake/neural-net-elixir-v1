@@ -23,9 +23,9 @@ defmodule Mix.Tasks.Neural do
 
     #IO.inspect layer.neurons
 
-    input_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{}, %NeuralNet.Neuron{}]}
-    output_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{}, %NeuralNet.Neuron{}]}
+    #input_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{}, %NeuralNet.Neuron{}]}
+    #output_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{}, %NeuralNet.Neuron{}]}
 
-    {:ok, input_layer, output_layer} = %NeuralNet.Layer.connect(input_layer, output_layer)
+    #{:ok, input_layer, output_layer} = %NeuralNet.Layer.connect(input_layer, output_layer)
   end
 end
