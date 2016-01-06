@@ -59,21 +59,21 @@ defmodule NeuralNet.Layer do
   end
 
   defp build_input_layer_neurons_with_connections(input_layer_name, output_layer_name) do
-    input_layer_outgoing_connections = 
+    input_layer_outgoing_connections =
       # group neurons by source
       Enum.chunk(neurons(:source_neurons), length(NeuralNet.Layer.neurons(output_layer_name)))
       |> Enum.map(fn(neurons) -> # collect the connections for each source neuron
-          Enum.map neurons, fn neuron ->
-            List.first neuron.outgoing # list of connections for a source neuron
-          end
+            Enum.map neurons, fn neuron ->
+              List.first neuron.outgoing # list of connections for a source neuron
+            end
          end)
 
     # reduce each source neuron with collected outgoing connections
     NeuralNet.Layer.neurons(input_layer_name)
     |> Stream.with_index
     |> Enum.map(fn tuple ->
-      {neuron, index} = tuple
-      %NeuralNet.Neuron{neuron | outgoing: Enum.at(input_layer_outgoing_connections, index)}
-    end)
+          {neuron, index} = tuple
+          %NeuralNet.Neuron{neuron | outgoing: Enum.at(input_layer_outgoing_connections, index)}
+       end)
   end
 end
