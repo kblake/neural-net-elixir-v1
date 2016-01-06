@@ -59,15 +59,14 @@ defmodule NeuralNet.Layer do
   end
 
   defp build_input_layer_neurons_with_connections(input_layer_name, output_layer_name) do
-    # group neurons by source
-    neurons_with_connections = Enum.chunk(neurons(:source_neurons), length(NeuralNet.Layer.neurons(output_layer_name)))
-
-    # collect the connections for each source neuron
-    input_layer_outgoing_connections = Enum.map neurons_with_connections, fn(neurons) ->
-      Enum.map neurons, fn neuron ->
-        List.first neuron.outgoing
-      end
-    end
+    input_layer_outgoing_connections = 
+      # group neurons by source
+      Enum.chunk(neurons(:source_neurons), length(NeuralNet.Layer.neurons(output_layer_name)))
+      |> Enum.map(fn(neurons) -> # collect the connections for each source neuron
+          Enum.map neurons, fn neuron ->
+            List.first neuron.outgoing # list of connections for a source neuron
+          end
+         end)
 
     # reduce each source neuron with collected outgoing connections
     NeuralNet.Layer.neurons(input_layer_name)
