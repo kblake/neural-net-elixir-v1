@@ -59,20 +59,6 @@ defmodule NeuralNet.LayerTest do
     end
   end
 
-  #test "input layer's outgoing neurons are stored" do
-    #input_layer  = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{input: 1}, %NeuralNet.Neuron{input: 2}]}
-    #output_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{input: 3}, %NeuralNet.Neuron{input: 4}]}
-
-    #{:ok, input_layer, output_layer} = NeuralNet.Layer.connect(input_layer, output_layer)
-
-    #Enum.each input_layer.neurons, fn(neuron) ->
-      #assert length(neuron.outgoing) == 2
-      #assert length(neuron.incoming) == 0
-      ##target_neurons = Enum.map neuron.outgoing, fn(connection) -> connection.target end
-      ##assert target_neurons == output_layer.neurons
-    #end
-  #end
-
   #it "output layer's incoming neurons + bias neuron are stored" do
     #input_layer.connect(output_layer)
 
