@@ -41,9 +41,9 @@ defmodule NeuralNet.Layer do
 
     Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
       Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
-        {:ok, s, t} = NeuralNet.Neuron.connect(source, target)
-        add_neurons(:source_neurons, [s])
-        #add_neurons(:target_neurons, [t])
+        {:ok, _source, _target} = NeuralNet.Neuron.connect(source, target)
+        add_neurons(:source_neurons, [_source])
+        #add_neurons(:target_neurons, [_target])
       end
     end
 
