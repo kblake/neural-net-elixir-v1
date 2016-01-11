@@ -39,26 +39,39 @@ defmodule NeuralNet.Layer do
     Agent.start_link(fn -> [] end, name: :source_neurons)
     Agent.start_link(fn -> [] end, name: :target_neurons)
 
-    # TODO: refactor this?
     Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
       Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
-        {:ok, s, t} = NeuralNet.Neuron.connect(source, target)
+        {:ok, connection} = Connection.connection_for(source, target)
+        s = %Neuron{source | outgoing: source.outgoing ++ [connection]}
+        t = %Neuron{target | incoming: target.incoming ++ [connection]}
         add_neurons(:source_neurons, [s])
-      end
-    end
-
-    Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
-      Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
-        {:ok, s, t} = NeuralNet.Neuron.connect(source, target)
         add_neurons(:target_neurons, [t])
       end
     end
 
-    input_layer_neurons = build_input_layer_neurons_with_connections(input_layer_name, output_layer_name)
-    output_layer_neurons = build_output_layer_neurons_with_connections(input_layer_name, output_layer_name)
+    IO.inspect neurons(:source_neurons)
+    IO.inspect neurons(:target_neurons)
 
-    set_neurons(input_layer_name, input_layer_neurons)
-    set_neurons(output_layer_name, output_layer_neurons)
+    # TODO: refactor this?
+    #Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
+      #Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
+        #{:ok, s, t} = NeuralNet.Neuron.connect(source, target)
+        #add_neurons(:source_neurons, [s])
+      #end
+    #end
+
+    #Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
+      #Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
+        #{:ok, s, t} = NeuralNet.Neuron.connect(source, target)
+        #add_neurons(:target_neurons, [t])
+      #end
+    #end
+
+    #input_layer_neurons = build_input_layer_neurons_with_connections(input_layer_name, output_layer_name)
+    #output_layer_neurons = build_output_layer_neurons_with_connections(input_layer_name, output_layer_name)
+
+    #set_neurons(input_layer_name, input_layer_neurons)
+    #set_neurons(output_layer_name, output_layer_neurons)
 
     stop_agent(:source_neurons)
     stop_agent(:target_neurons)
