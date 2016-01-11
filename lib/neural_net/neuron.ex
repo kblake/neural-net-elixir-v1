@@ -60,7 +60,8 @@ defmodule NeuralNet.Neuron do
       2
   """
   def connect(source, target) do
-    connection = %Connection{source: source, target: target}
+    #connection = %Connection{source: source, target: target}
+    {:ok, connection} = Connection.connection_for(source, target)
     source = %Neuron{source | outgoing: source.outgoing ++ [connection]}
     target = %Neuron{target | incoming: target.incoming ++ [connection]}
     {:ok, source, target}
