@@ -7,4 +7,9 @@ defmodule NeuralNet.Connection do
       0.5
   """
   defstruct source: %{}, target: %{}, weight: 0.5
+
+
+  def connection_for(source, target) do
+    {:ok, %NeuralNet.Connection{source: source, target: target}}
+  end
 end

@@ -16,4 +16,12 @@ defmodule NeuralNet.ConnectionTest do
     assert connection.source == neuronA
     assert connection.target == neuronB
   end
+
+  test "create a connection for two neurons" do
+    neuronA = %NeuralNet.Neuron{input: 10}
+    neuronB = %NeuralNet.Neuron{input: 5}
+    {:ok, connection} = NeuralNet.Connection.connection_for(neuronA, neuronB)
+    assert connection.source == neuronA
+    assert connection.target == neuronB
+  end
 end
