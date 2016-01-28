@@ -39,7 +39,7 @@ defmodule NeuralNet.Neuron do
       iex> neuron = %NeuralNet.Neuron{ incoming: [ %NeuralNet.Connection{source: %NeuralNet.Neuron{output: 6}} ] }
       ...> neuron = NeuralNet.Neuron.activate(neuron)
       ...> neuron.output
-      0.9525741268224334
+      0.9168273035060777
   """
   def activate(neuron, value \\ nil) do
     input = value || Enum.reduce(neuron.incoming, 0, sumf)

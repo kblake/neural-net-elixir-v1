@@ -6,7 +6,7 @@ defmodule NeuralNet.ConnectionTest do
     connection = %NeuralNet.Connection{}
     assert connection.source == %{}
     assert connection.target == %{}
-    assert connection.weight == 0.5
+    assert connection.weight == 0.4
   end
 
   test "assign neurons to source and target" do

@@ -4,9 +4,9 @@ defmodule NeuralNet.Connection do
 
       iex> connection = %NeuralNet.Connection{}
       ...> connection.weight
-      0.5
+      0.4
   """
-  defstruct source: %{}, target: %{}, weight: 0.5
+  defstruct source: %{}, target: %{}, weight: 0.4
 
 
   def connection_for(source, target) do

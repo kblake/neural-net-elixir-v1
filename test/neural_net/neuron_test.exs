@@ -32,7 +32,7 @@ defmodule NeuralNet.NeuronTest do
       ]
     }
     neuron = NeuralNet.Neuron.activate(neuron)
-    assert neuron.output == 0.9706877692486436
+    assert neuron.output == 0.9426758241011313
   end
 
   test ".connect" do
