@@ -2,6 +2,12 @@ defmodule NeuralNet.Neuron do
   alias NeuralNet.Neuron,     as: Neuron
   alias NeuralNet.Connection, as: Connection
 
+  @learning_rate 0.3
+
+  def learning_rate do
+    @learning_rate
+  end
+
   defstruct input: 0, output: 0, incoming: [], outgoing: []
 
   @doc """

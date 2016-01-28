@@ -10,6 +10,10 @@ defmodule NeuralNet.NeuronTest do
     assert neuron.outgoing == []
   end
 
+  test "has learning rate" do
+    assert NeuralNet.Neuron.learning_rate == 0.3
+  end
+
   test ".activation_function" do
     assert NeuralNet.Neuron.activation_function(1) == 0.7310585786300049
   end
