@@ -6,7 +6,7 @@ defmodule NeuralNet.Connection do
       ...> connection.weight
       0.4
   """
-  defstruct source: %{}, target: %{}, weight: 0.4
+  defstruct source: %{}, target: %{}, weight: 0.4 # make weight random at some point
 
 
   def connection_for(source, target) do
