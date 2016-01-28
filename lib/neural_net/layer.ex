@@ -43,7 +43,7 @@ defmodule NeuralNet.Layer do
     # accumulate connections then map
     Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
       Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
-        {:ok, s, t} = NeuralNet.Neuron.connect(source, target)
+        {:ok, s, _} = NeuralNet.Neuron.connect(source, target)
         add_neurons(:source_neurons, [s])
       end
     end
@@ -52,7 +52,7 @@ defmodule NeuralNet.Layer do
     # accumulate connections then map
     Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
       Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
-        {:ok, s, t} = NeuralNet.Neuron.connect(source, target)
+        {:ok, _, t} = NeuralNet.Neuron.connect(source, target)
         add_neurons(:target_neurons, [t])
       end
     end
