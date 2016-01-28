@@ -4,10 +4,11 @@ defmodule NeuralNet.NeuronTest do
 
   test "has default values" do
     neuron = %NeuralNet.Neuron{}
-    assert neuron.input == 0
-    assert neuron.output == 0
-    assert neuron.incoming == []
-    assert neuron.outgoing == []
+    assert neuron.input     == 0
+    assert neuron.output    == 0
+    assert neuron.incoming  == []
+    assert neuron.outgoing  == []
+    assert neuron.bias      == false
   end
 
   test "has learning rate" do
@@ -37,6 +38,12 @@ defmodule NeuralNet.NeuronTest do
     }
     neuron = NeuralNet.Neuron.activate(neuron)
     assert neuron.output == 0.9426758241011313
+  end
+
+  test ".activate a bias neuron" do
+    neuron = %NeuralNet.Neuron{bias: true}
+    neuron = NeuralNet.Neuron.activate(neuron)
+    assert neuron.output == 1
   end
 
   test ".connect" do

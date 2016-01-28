@@ -8,7 +8,7 @@ defmodule NeuralNet.Neuron do
     @learning_rate
   end
 
-  defstruct input: 0, output: 0, incoming: [], outgoing: []
+  defstruct input: 0, output: 0, incoming: [], outgoing: [], bias: false
 
   @doc """
   Sigmoid function. See more at: https://en.wikipedia.org/wiki/Sigmoid_function
@@ -48,8 +48,12 @@ defmodule NeuralNet.Neuron do
       0.9168273035060777
   """
   def activate(neuron, value \\ nil) do
-    input = value || Enum.reduce(neuron.incoming, 0, sumf)
-    %Neuron{neuron | output: activation_function(input)}
+    if neuron.bias do
+      %Neuron{neuron | output: 1}
+    else
+      input = value || Enum.reduce(neuron.incoming, 0, sumf)
+      %Neuron{neuron | output: activation_function(input)}
+    end
   end
 
   @doc """
