@@ -75,4 +75,8 @@ defmodule NeuralNet.Neuron do
     target = %Neuron{target | incoming: target.incoming ++ [connection]}
     {:ok, source, target}
   end
+
+  def bias_neuron do
+    %NeuralNet.Neuron{ bias?: true }
+  end
 end

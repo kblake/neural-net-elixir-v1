@@ -35,14 +35,25 @@ defmodule NeuralNet.Layer do
     neurons(layer_name)
   end
 
+  defp contains_bias?(layer_name) do
+    Enum.any? neurons(layer_name), fn(output_neuron) ->
+      output_neuron.bias?
+    end
+  end
+
   def connect(input_layer_name, output_layer_name) do
     Agent.start_link(fn -> [] end, name: :source_neurons)
     Agent.start_link(fn -> [] end, name: :target_neurons)
 
+    unless contains_bias?(input_layer_name) do
+      add_neurons(input_layer_name, [NeuralNet.Neuron.bias_neuron])
+    end
+
     # TODO: refactor this
     # accumulate connections then map
-    Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
-      Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
+    # Result: Output layer of source neurons
+    Enum.each neurons(input_layer_name), fn(source) ->
+      Enum.each neurons(output_layer_name), fn(target) ->
         {:ok, s, _} = NeuralNet.Neuron.connect(source, target)
         add_neurons(:source_neurons, [s])
       end
@@ -50,8 +61,9 @@ defmodule NeuralNet.Layer do
 
     # TODO: refactor this
     # accumulate connections then map
-    Enum.each NeuralNet.Layer.neurons(output_layer_name), fn(target) ->
-      Enum.each NeuralNet.Layer.neurons(input_layer_name), fn(source) ->
+    # Result: Input layer of target neurons
+    Enum.each neurons(output_layer_name), fn(target) ->
+      Enum.each neurons(input_layer_name), fn(source) ->
         {:ok, _, t} = NeuralNet.Neuron.connect(source, target)
         add_neurons(:target_neurons, [t])
       end
@@ -78,7 +90,7 @@ defmodule NeuralNet.Layer do
   defp build_input_layer_neurons_with_connections(input_layer_name, output_layer_name) do
     # group neurons by source
     input_layer_outgoing_connections =
-    Enum.chunk(neurons(:source_neurons), length(NeuralNet.Layer.neurons(output_layer_name)))
+    Enum.chunk(neurons(:source_neurons), length(neurons(output_layer_name)))
     |> Enum.map(fn(neurons) -> # collect the connections for each source neuron
       Enum.map neurons, fn neuron ->
         List.first neuron.outgoing # list of connections for a source neuron
@@ -86,7 +98,7 @@ defmodule NeuralNet.Layer do
     end)
 
     # reduce each source neuron with collected outgoing connections
-    NeuralNet.Layer.neurons(input_layer_name)
+    neurons(input_layer_name)
     |> Stream.with_index
     |> Enum.map(fn tuple ->
       {neuron, index} = tuple
@@ -100,7 +112,7 @@ defmodule NeuralNet.Layer do
   defp build_output_layer_neurons_with_connections(input_layer_name, output_layer_name) do
     # group neurons by source
     output_layer_incoming_connections =
-    Enum.chunk(neurons(:target_neurons), length(NeuralNet.Layer.neurons(input_layer_name)))
+    Enum.chunk(neurons(:target_neurons), length(neurons(input_layer_name)))
     |> Enum.map(fn(neurons) -> # collect the connections for each target neuron
       Enum.map neurons, fn neuron ->
         List.first neuron.incoming # list of connections for a target neuron
@@ -108,7 +120,7 @@ defmodule NeuralNet.Layer do
     end)
 
     # reduce each source neuron with collected outgoing connections
-    NeuralNet.Layer.neurons(output_layer_name)
+    neurons(output_layer_name)
     |> Stream.with_index
     |> Enum.map(fn tuple ->
       {neuron, index} = tuple

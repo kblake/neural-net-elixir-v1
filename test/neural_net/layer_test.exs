@@ -59,11 +59,27 @@ defmodule NeuralNet.LayerTest do
     end
 
     Enum.each output_layer_neurons, fn(neuron) ->
-      assert length(neuron.incoming) == length(input_neurons)
+      assert length(neuron.incoming) == length(input_neurons) + 1 # account for bias
       assert length(neuron.outgoing) == 0
       source_neurons = Enum.map neuron.incoming, fn(connection) -> connection.source end
-      assert source_neurons == input_neurons
+
+      # account for bias neuron
+      assert source_neurons == input_neurons ++ [NeuralNet.Neuron.bias_neuron]
+    end
+  end
+
+  test "bias neuron is added" do
+    input_neurons = [%NeuralNet.Neuron{input: 1}, %NeuralNet.Neuron{input: 2}]
+    NeuralNet.Layer.start_link(:input_layer, input_neurons)
+    output_neurons = [%NeuralNet.Neuron{input: 3}, %NeuralNet.Neuron{input: 4}]
+    NeuralNet.Layer.start_link(:output_layer, output_neurons)
+
+    {:ok, _, output_layer_neurons} = NeuralNet.Layer.connect(:input_layer, :output_layer)
+
+    Enum.each output_layer_neurons, fn(neuron) ->
+      assert length(neuron.incoming) == length(input_neurons) + 1 # account for bias neuron
+      source_neurons = Enum.map neuron.incoming, fn(connection) -> connection.source end
+      assert Enum.any?(source_neurons, fn(source_neuron) -> source_neuron.bias? end)
     end
   end
 end
-

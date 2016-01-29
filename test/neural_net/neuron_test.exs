@@ -46,6 +46,13 @@ defmodule NeuralNet.NeuronTest do
     assert neuron.output == 1
   end
 
+  test ".bias_neuron" do
+    bias_neuron = NeuralNet.Neuron.bias_neuron
+    assert bias_neuron.bias?
+    assert bias_neuron.incoming == []
+    assert bias_neuron.outgoing == []
+  end
+
   test ".connect" do
     neuronA = %NeuralNet.Neuron{ outgoing: [%NeuralNet.Connection{}] }
     neuronB = %NeuralNet.Neuron{ incoming: [%NeuralNet.Connection{}] }
