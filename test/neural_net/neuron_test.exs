@@ -8,7 +8,7 @@ defmodule NeuralNet.NeuronTest do
     assert neuron.output    == 0
     assert neuron.incoming  == []
     assert neuron.outgoing  == []
-    assert neuron.bias      == false
+    assert neuron.bias?     == false
   end
 
   test "has learning rate" do
@@ -41,7 +41,7 @@ defmodule NeuralNet.NeuronTest do
   end
 
   test ".activate a bias neuron" do
-    neuron = %NeuralNet.Neuron{bias: true}
+    neuron = %NeuralNet.Neuron{bias?: true}
     neuron = NeuralNet.Neuron.activate(neuron)
     assert neuron.output == 1
   end
