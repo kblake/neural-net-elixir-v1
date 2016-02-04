@@ -7,6 +7,11 @@ defmodule NeuralNet.LayerTest do
     assert NeuralNet.Layer.neurons(:input_layer) == []
   end
 
+  test "initialize layer with a number neurons set by size" do
+    neurons = NeuralNet.Layer.init_neurons_by_size(5)
+    assert length(neurons) == 5
+  end
+
   test "layer initialized with neurons" do
     neurons = [%NeuralNet.Neuron{input: 1}, %NeuralNet.Neuron{input: 2}]
     NeuralNet.Layer.start_link(:input_layer, neurons)

@@ -3,6 +3,10 @@ defmodule NeuralNet.Layer do
     Agent.start_link(fn -> neurons end, name: layer_name)
   end
 
+  def init_neurons_by_size(size) do
+    List.duplicate(%NeuralNet.Neuron{}, size)
+  end
+
   def neurons(layer_name) do
     Agent.get(layer_name, (&(&1)))
   end
@@ -21,14 +25,12 @@ defmodule NeuralNet.Layer do
   end
 
   def activate(layer_name, values \\ nil) do
-    values = values || []
-
     Agent.update(layer_name, fn neurons ->
       neurons
       |> Stream.with_index
       |> Enum.map(fn(tuple) ->
         {neuron, index} = tuple
-        NeuralNet.Neuron.activate(neuron, Enum.at(values, index))
+        NeuralNet.Neuron.activate(neuron, Enum.at(List.wrap(values), index))
       end)
     end)
 
