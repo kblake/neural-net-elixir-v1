@@ -12,9 +12,9 @@ defmodule NeuralNet.NetworkTest do
     assert length(network.output_layer) == 5
   end
 
-  # test "Create network: hidden layers initialized" do
-  #   network = NeuralNet.Network.create([3,2,6,5])
-  #   assert length(network.hidden_layers[0]) == 3
-  #   assert length(network.hidden_layers[1]) == 6
-  # end
+  test "Create network: hidden layers initialized" do
+    network = NeuralNet.Network.create([3,2,6,5])
+    assert length(List.first(network.hidden_layers)) == 2
+    assert length(List.last(network.hidden_layers)) == 6
+  end
 end
