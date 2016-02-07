@@ -10,13 +10,11 @@ defmodule NeuralNet.Network do
   end
 
   defp extract_input_neurons(layer_sizes) do
-    [input_layer_size | tail] = layer_sizes
-    NeuralNet.Layer.init_neurons_by_size(input_layer_size)
+    NeuralNet.Layer.init_neurons_by_size(List.first(layer_sizes))
   end
 
   defp extract_output_neurons(layer_sizes) do
-    output_layer_size = List.last(layer_sizes)
-    NeuralNet.Layer.init_neurons_by_size(output_layer_size)
+    NeuralNet.Layer.init_neurons_by_size(List.last(layer_sizes))
   end
 
   defp extract_hidden_neurons(layer_sizes) do
