@@ -3,25 +3,25 @@ defmodule NeuralNet.Network do
 
   def create(layer_sizes) do
     %NeuralNet.Network{
-      input_layer:    extract_input_neurons(layer_sizes),
-      output_layer:   extract_output_neurons(layer_sizes),
-      hidden_layers:  extract_hidden_neurons(layer_sizes)
+      input_layer:    input_neurons(layer_sizes),
+      output_layer:   output_neurons(layer_sizes),
+      hidden_layers:  hidden_neurons(layer_sizes)
     }
   end
 
-  defp extract_input_neurons(layer_sizes) do
+  defp input_neurons(layer_sizes) do
     layer_sizes
     |> List.first
     |> NeuralNet.Layer.init_neurons_by_size
   end
 
-  defp extract_output_neurons(layer_sizes) do
+  defp output_neurons(layer_sizes) do
     layer_sizes
     |> List.last
     |> NeuralNet.Layer.init_neurons_by_size
   end
 
-  defp extract_hidden_neurons(layer_sizes) do
+  defp hidden_neurons(layer_sizes) do
     layer_sizes
     |> Enum.slice(1..length(layer_sizes) - 2)
     |> Enum.map(fn size ->
