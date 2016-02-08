@@ -23,10 +23,15 @@ defmodule NeuralNet.Network do
 
   defp hidden_neurons(layer_sizes) do
     layer_sizes
-    |> Enum.slice(1..length(layer_sizes) - 2)
+    |> middle_layer_sizes
     |> Enum.map(fn size ->
         NeuralNet.Layer.init_neurons_by_size(size)
        end)
+  end
+
+  defp middle_layer_sizes(layer_sizes) do
+    layer_sizes
+    |> Enum.slice(1..length(layer_sizes) - 2)
   end
 
   # def activate do
