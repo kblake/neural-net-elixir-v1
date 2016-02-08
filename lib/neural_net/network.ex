@@ -10,18 +10,23 @@ defmodule NeuralNet.Network do
   end
 
   defp extract_input_neurons(layer_sizes) do
-    NeuralNet.Layer.init_neurons_by_size(List.first(layer_sizes))
+    layer_sizes
+    |> List.first
+    |> NeuralNet.Layer.init_neurons_by_size
   end
 
   defp extract_output_neurons(layer_sizes) do
-    NeuralNet.Layer.init_neurons_by_size(List.last(layer_sizes))
+    layer_sizes
+    |> List.last
+    |> NeuralNet.Layer.init_neurons_by_size
   end
 
   defp extract_hidden_neurons(layer_sizes) do
-    hidden_layer_sizes = Enum.slice(layer_sizes, 1..length(layer_sizes) - 2)
-    Enum.map(hidden_layer_sizes, fn size ->
-      NeuralNet.Layer.init_neurons_by_size(size)
-    end)
+    layer_sizes
+    |> Enum.slice(1..length(layer_sizes) - 2)
+    |> Enum.map(fn size ->
+        NeuralNet.Layer.init_neurons_by_size(size)
+       end)
   end
 
   # def activate do
