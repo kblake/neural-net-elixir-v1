@@ -43,7 +43,13 @@ defmodule NeuralNet.Layer do
     end
   end
 
-  def connect(input_layer_name, output_layer_name) do
+  def connect(input_neurons, output_neurons) do
+    input_layer_name  = :input_layer
+    output_layer_name = :output_layer
+
+    start_link(:input_layer, input_neurons)
+    start_link(:output_layer, output_neurons)
+
     Agent.start_link(fn -> [] end, name: :source_neurons)
     Agent.start_link(fn -> [] end, name: :target_neurons)
 

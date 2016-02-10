@@ -17,4 +17,9 @@ defmodule NeuralNet.NetworkTest do
     assert length(List.first(network.hidden_layers)) == 2
     assert length(List.last(network.hidden_layers)) == 6
   end
+
+  test "Connect layers in network" do
+    network = NeuralNet.Network.create([3,2,5])
+    NeuralNet.Network.connect_layers(network)
+  end
 end

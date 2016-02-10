@@ -50,11 +50,8 @@ defmodule NeuralNet.LayerTest do
 
   test "input and output layers are connected" do
     input_neurons = [%NeuralNet.Neuron{input: 1}, %NeuralNet.Neuron{input: 2}]
-    NeuralNet.Layer.start_link(:input_layer, input_neurons)
     output_neurons = [%NeuralNet.Neuron{input: 3}, %NeuralNet.Neuron{input: 4}, %NeuralNet.Neuron{input: 5}]
-    NeuralNet.Layer.start_link(:output_layer, output_neurons)
-
-    {:ok, input_layer_neurons, output_layer_neurons} = NeuralNet.Layer.connect(:input_layer, :output_layer)
+    {:ok, input_layer_neurons, output_layer_neurons} = NeuralNet.Layer.connect(input_neurons, output_neurons)
 
     Enum.each input_layer_neurons, fn(neuron) ->
       assert length(neuron.outgoing) == length(output_neurons)
