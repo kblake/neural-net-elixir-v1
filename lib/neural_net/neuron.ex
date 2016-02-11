@@ -24,6 +24,8 @@ defmodule NeuralNet.Neuron do
 
   defp sumf do
     fn(connection, sum) ->
+      IO.inspect connection.source
+      IO.inspect connection.weight
       sum + connection.source.output * connection.weight
     end
   end
@@ -51,6 +53,7 @@ defmodule NeuralNet.Neuron do
     if neuron.bias? do
       %Neuron{neuron | output: 1}
     else
+      IO.puts "length of incoming: #{length(neuron.incoming)}"
       input = value || Enum.reduce(neuron.incoming, 0, sumf)
       %Neuron{neuron | output: activation_function(input)}
     end

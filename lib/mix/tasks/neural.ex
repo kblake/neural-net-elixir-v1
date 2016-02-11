@@ -54,21 +54,24 @@ defmodule Mix.Tasks.Neural do
   #   end
 
 
-    IO.puts "hello world"
-
     neuronA = %NeuralNet.Neuron{}
     neuronB = %NeuralNet.Neuron{}
 
-    {:ok, neuronA, neuronB} = NeuralNet.Neuron.connect(neuronA, neuronB)
 
-    IO.inspect neuronB.incoming
+     {:ok, neuronA, neuronB} = NeuralNet.Neuron.connect(neuronA, neuronB)
+    #  IO.puts List.first(neuronB.incoming).source.output
+    #  IO.puts List.first(neuronB.incoming).weight
 
     for i <- 1..1 do
+      IO.puts "neuronA activate =============="
       neuronA = NeuralNet.Neuron.activate(neuronA, 2)
+      IO.puts "neuronA output: #{neuronA.output}"
+
+      IO.puts "neuronB activate =============="
       neuronB = NeuralNet.Neuron.activate(neuronB)
 
       # IO.puts "A out: #{neuronA.output}"
-      # IO.puts "B out: #{neuronB.output}"
+      IO.puts "B out: #{neuronB.output}"
     end
 
   end
