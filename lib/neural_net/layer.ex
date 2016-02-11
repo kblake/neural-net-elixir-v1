@@ -47,11 +47,18 @@ defmodule NeuralNet.Layer do
     input_layer_name  = :input_layer
     output_layer_name = :output_layer
 
-    start_link(:input_layer, input_neurons)
-    start_link(:output_layer, output_neurons)
+    #####################################################
+    # Use supervision, restart strategy as outlined:
+    # "Shooting supervised doors"
+    # https://howistart.org/posts/elixir/1
+    #####################################################
+    start_link(input_layer_name, input_neurons)
+    start_link(output_layer_name, output_neurons)
 
     Agent.start_link(fn -> [] end, name: :source_neurons)
     Agent.start_link(fn -> [] end, name: :target_neurons)
+    #######################################################
+
 
     unless contains_bias?(input_layer_name) do
       add_neurons(input_layer_name, [NeuralNet.Neuron.bias_neuron])
@@ -83,8 +90,9 @@ defmodule NeuralNet.Layer do
     set_neurons(input_layer_name, input_layer_neurons)
     set_neurons(output_layer_name, output_layer_neurons)
 
-    stop_agent(:source_neurons)
-    stop_agent(:target_neurons)
+    # stop_agent(:source_neurons)
+    # stop_agent(:target_neurons)
+
 
     {:ok, input_layer_neurons, output_layer_neurons}
   end

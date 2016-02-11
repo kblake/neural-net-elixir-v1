@@ -38,28 +38,28 @@ defmodule NeuralNet.Network do
 
   # end
 
-  # neurons
-  # |> Stream.with_index
-  # |> Enum.map(fn(tuple) ->
-  #   {neuron, index} = tuple
-  #   NeuralNet.Neuron.activate(neuron, Enum.at(List.wrap(values), index))
-  # end)
   def connect_layers(network) do
-    network
-    |> layers
+    layers = layers(network)
+
+    connected_layers = layers
     |> Stream.with_index
     |> Enum.map(fn(tuple) ->
          {layer, index} = tuple
-         IO.inspect layer
-         # TODO: connect layers
+         next_index = index + 1
+
+         if Enum.at(layers, next_index) do
+           {:ok, input_layer_neurons, output_layer_neurons} = NeuralNet.Layer.connect(layer, Enum.at(layers, next_index))
+           input_layer_neurons
+         else # last layer
+           {:ok, input_layer_neurons, output_layer_neurons} = NeuralNet.Layer.connect(Enum.at(layers, index - 1), layer)
+           output_layer_neurons
+         end
        end)
+
+    IO.inspect List.last connected_layers
   end
 
   defp layers(network) do
-    [
-      network.input_layer,
-      network.hidden_layers,
-      network.output_layer
-    ]
+    [network.input_layer] ++ network.hidden_layers ++ [network.output_layer]
   end
 end

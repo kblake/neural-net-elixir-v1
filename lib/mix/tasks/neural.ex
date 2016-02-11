@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Neural do
     #neuronA = %NeuralNet.Neuron{}
     #neuronB = %NeuralNet.Neuron{}
 
-    #{:ok, neuronA, neuronB} = NeuralNet.Neuron.connect(neuronA, neuronB)
+    # {:ok, neuronA, neuronB} = NeuralNet.Neuron.connect(neuronA, neuronB)
 
     #neuronA = NeuralNet.Neuron.activate(neuronA)
     #IO.puts neuronA.output
@@ -19,13 +19,57 @@ defmodule Mix.Tasks.Neural do
     #IO.inspect layer.neurons
 
     #inputs = [1,1,1]
-    #{:ok, layer} = NeuralNet.Layer.activate(layer, inputs)
+    # {:ok, layer} = NeuralNet.Layer.activate(layer, inputs)
 
     #IO.inspect layer.neurons
 
     #input_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{}, %NeuralNet.Neuron{}]}
     #output_layer = %NeuralNet.Layer{neurons: [%NeuralNet.Neuron{}, %NeuralNet.Neuron{}]}
 
-    #{:ok, input_layer, output_layer} = %NeuralNet.Layer.connect(input_layer, output_layer)
+    # {:ok, input_layer, output_layer} = %NeuralNet.Layer.connect(input_layer, output_layer)
+
+    #############################################################################
+    #############################################################################
+
+  #   neuronA = NeuralNetwork::Neuron.new
+  #   neuronB = NeuralNetwork::Neuron.new
+
+  #   neuronA.connect(neuronB)
+
+  #   10000.times do |n|
+  #     neuronA.activate(2)
+  #     neuronB.activate
+
+  #     #puts "A out: #{neuronA.output}"
+  #     #puts "B out: #{neuronB.output}"
+
+  #     neuronB.train(1)
+  #     neuronA.train
+
+  #     if n == 0 || n % 1000 == 0
+  #      puts "epoch: #{n} error: #{neuronB.error}"
+  #     end
+  #     #puts "A error/delta: #{neuronA.error}/#{neuronA.delta}"
+  #     #puts "B error/delta: #{neuronB.error}/#{neuronB.delta}"
+  #   end
+
+
+    IO.puts "hello world"
+
+    neuronA = %NeuralNet.Neuron{}
+    neuronB = %NeuralNet.Neuron{}
+
+    {:ok, neuronA, neuronB} = NeuralNet.Neuron.connect(neuronA, neuronB)
+
+    IO.inspect neuronB.incoming
+
+    for i <- 1..1 do
+      neuronA = NeuralNet.Neuron.activate(neuronA, 2)
+      neuronB = NeuralNet.Neuron.activate(neuronB)
+
+      # IO.puts "A out: #{neuronA.output}"
+      # IO.puts "B out: #{neuronB.output}"
+    end
+
   end
 end
